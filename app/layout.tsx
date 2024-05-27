@@ -21,7 +21,11 @@ export default function RootLayout({
       <body
         className={
           inter.className +
-          "h-full w-ful bg-gradient-to-l from-cyan-300 via-amber-200 to-purple-300 "
+          // "h-full w-full bg-gradient-to-l from-cyan-300 via-amber-200 to-purple-300 "
+          "h-full w-full bg-gradient-to-r from-indigo-300 to-purple-400"
+          // "h-full w-full"
+          // "h-full w-full bg-gradient-to-r from-cyan-200 to-cyan-400"
+          // "h-full w-full bg-gradient-to-r from-green-300 to-purple-400"
         }
       >
         <TanstackQueryProvider>

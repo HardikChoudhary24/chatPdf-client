@@ -17,12 +17,14 @@ import useCreateProject from "@/utils/hooks/projectApiHooks/useCreateProject";
 import toast from "react-hot-toast";
 import useGetSignedUrl from "@/utils/hooks/projectApiHooks/useGetSignedUrl";
 import { useQueryClient } from "@tanstack/react-query";
+import useUploadPdf from "@/utils/hooks/projectApiHooks/useUploadPdf";
 
 const UploadModal = () => {
-  const [projectName, setProjectName] = useState("");
   const queryClient = useQueryClient();
+  const [projectName, setProjectName] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [open, setOpen] = useState(false);
+  const { mutate: uploadPdf } = useUploadPdf();
   const {
     mutate: createProject,
     data: projectDetails,
@@ -65,13 +67,29 @@ const UploadModal = () => {
     if (signedUrl && signedUrl.url) {
       toast.loading("Creating your project", { id: "project-creation" });
       const url = new URL(signedUrl.url);
-      createProject(
-        { pdfUrl: `${url.origin}${url.pathname}`, name: projectName, file: file! },
+      uploadPdf(
+        { signedUrl: signedUrl.url, file },
         {
           onSuccess: () => {
-            toast.success("Project Created", { id: "project-creation" });
-            queryClient.invalidateQueries({ queryKey: ["all-projects"] });
-            setOpen(false);
+            createProject(
+              {
+                pdfUrl: `${url.origin}${url.pathname}`,
+                name: projectName,
+                file: file!,
+              },
+              {
+                onSuccess: async () => {
+                  await queryClient.invalidateQueries({
+                    queryKey: ["all-projects"],
+                  });
+                  toast.success("Project Created", { id: "project-creation" });
+                  setOpen(false);
+                },
+              }
+            );
+          },
+          onError: () => {
+            toast.error("Unable to upload pdf.", { id: "project-creation" });
           },
         }
       );
@@ -81,7 +99,9 @@ const UploadModal = () => {
   return (
     <div className="flex justify-center items-center gap-x-4">
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger className="bg-blue-950 text-white p-2 rounded-md text-sm font-semibold hover:bg-blue-900">Create a project</DialogTrigger>
+        <DialogTrigger className="bg-blue-950 text-white p-2 rounded-md text-sm font-semibold hover:bg-blue-900">
+          Create a project
+        </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Create Project</DialogTitle>
