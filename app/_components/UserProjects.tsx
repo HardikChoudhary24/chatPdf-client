@@ -13,7 +13,7 @@ import { Loader } from "rsuite";
 import { cn } from "@/lib/utils";
 
 const UserProjects = () => {
-  const { allProjects, refetch, isLoading } = useGetAllProjects();
+  const { allProjects, refetch, isLoading, status } = useGetAllProjects();
   const [userProjects, setUserProjects] = useState<Project[] | []>([]);
   const router = useRouter();
   useEffect(() => {
@@ -51,70 +51,68 @@ const UserProjects = () => {
       ) : (
         <>
           <div className="grid grid-cols-3 gap-3 w-full mt-4 py-3 px-5">
-            {allProjects &&
-              allProjects.data &&
-              allProjects.data?.projects.map((project, index) => (
+            {userProjects.map((project, index) => (
+              <div
+                key={project.project_id}
+                className="col-span-1 bg-white rounded-lg shadow-md flex flex-col justify-start items-center h-fit hover:shadow-xl transition-all ease-in border overflow-hidden"
+              >
                 <div
-                  key={project.project_id}
-                  className="col-span-1 bg-white rounded-lg shadow-md flex flex-col justify-start items-center h-fit hover:shadow-xl transition-all ease-in border overflow-hidden"
+                  className={`w-full flex flex-col justify-center items-center border-b h-full py-5 bg-[${
+                    colors[index % 20]
+                  }]`}
+                  style={{
+                    backgroundColor: colors[index % 20].light,
+                    color: colors[index % 20].dark,
+                  }}
                 >
-                  <div
-                    className={`w-full flex flex-col justify-center items-center border-b h-full py-5 bg-[${
-                      colors[index % 20]
-                    }]`}
-                    style={{
-                      backgroundColor: colors[index % 20].light,
-                      color: colors[index % 20].dark,
-                    }}
-                  >
-                    <FaFilePdf size={65} />
+                  <FaFilePdf size={65} />
+                </div>
+                <div className="py-1 flex justify-start items-center w-full px-4">
+                  <div className="flex flex-col justify-start items-start gap-y-2 w-full">
+                    <span className="text-sm font-semibold">
+                      {project.project_name}
+                    </span>
+                    <span
+                      className={`text-xs font-medium ${
+                        project.status === "creating"
+                          ? "text-yellow-500"
+                          : project.status === "created"
+                          ? "text-green-600"
+                          : "text-red-500"
+                      } `}
+                    >
+                      <span className="text-black">Status: </span>
+                      {project.status}
+                    </span>
                   </div>
-                  <div className="py-1 flex justify-start items-center w-full px-4">
-                    <div className="flex flex-col justify-start items-start gap-y-2 w-full">
-                      <span className="text-sm font-semibold">
-                        {project.project_name}
-                      </span>
-                      <span
-                        className={`text-xs font-medium ${
-                          project.status === "creating"
-                            ? "text-yellow-500"
-                            : project.status === "created"
-                            ? "text-green-600"
-                            : "text-red-500"
-                        } `}
-                      >
-                        <span className="text-black">Status: </span>
-                        {project.status}
+                  {project.status === "created" && (
+                    <div
+                      className="text-zinc-800 hover:text-black p-1 hover:bg-zinc-200 rounded-lg hover:cursor-pointer"
+                      onClick={() => {
+                        router.push(`/dashboard/chat/${project.project_id}`);
+                      }}
+                    >
+                      <HiOutlineArrowNarrowRight size={20} />
+                    </div>
+                  )}
+                  {project.status === "failed" && (
+                    <div
+                      className="text-green-600 hover:text-white p-1 hover:bg-green-500 rounded-lg hover:cursor-pointer flex justify-center items-center"
+                      onClick={() => {
+                        router.push(`/dashboard/chat/${project.project_id}`);
+                      }}
+                    >
+                      {/* <HiOutlineArrowNarrowRight size={20} /> */}
+                      <span className="font-semibold text-xs text-nowrap">
+                        Retry
                       </span>
                     </div>
-                    {project.status === "created" && (
-                      <div
-                        className="text-zinc-800 hover:text-black p-1 hover:bg-zinc-200 rounded-lg hover:cursor-pointer"
-                        onClick={() => {
-                          router.push(`/dashboard/chat/${project.project_id}`);
-                        }}
-                      >
-                        <HiOutlineArrowNarrowRight size={20} />
-                      </div>
-                    )}
-                    {project.status === "failed" && (
-                      <div
-                        className="text-green-600 hover:text-white p-1 hover:bg-green-500 rounded-lg hover:cursor-pointer flex justify-center items-center"
-                        onClick={() => {
-                          router.push(`/dashboard/chat/${project.project_id}`);
-                        }}
-                      >
-                        {/* <HiOutlineArrowNarrowRight size={20} /> */}
-                        <span className="font-semibold text-xs text-nowrap">
-                          Retry
-                        </span>
-                      </div>
-                    )}
-                  </div>
+                  )}
                 </div>
-              ))}
+              </div>
+            ))}
           </div>
-          {allProjects.data?.projects?.length === 0 && (
+          {userProjects.length === 0 && (
             <div className="w-full flex flex-col justify-center items-center pt-10 gap-y-2">
               <Image
                 src={"/empty-state-illustration.svg"}
