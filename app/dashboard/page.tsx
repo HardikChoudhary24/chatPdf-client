@@ -28,7 +28,7 @@ const Dashboard = () => {
       </div>
       <div className="flex flex-col justify-center items-center gap-y-5">
         <h1 className="font-bold text-5xl">PDF Buddy</h1>
-        <span className="font-semibold text-2xl">
+        <span className="font-semibold text-2xl text-center px-3">
           Chat with the Future: Seamlessly Share and Discuss PDFs with AI
           Assistance!
         </span>

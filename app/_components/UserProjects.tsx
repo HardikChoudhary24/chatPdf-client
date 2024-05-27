@@ -24,7 +24,7 @@ const UserProjects = () => {
   return (
     <div
       className={cn(
-        "w-[65%] h-full overflow-y-auto rounded-lg bg-zinc-100 customScrollbar relative",
+        "lg:w-[65%] h-full overflow-y-auto rounded-lg bg-zinc-100 customScrollbar relative w-[90%]",
         {
           "overflow-y-hidden": isLoading,
         }
@@ -50,11 +50,11 @@ const UserProjects = () => {
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-3 gap-3 w-full mt-4 py-3 px-5">
+          <div className="flex flex-wrap justify-center items-center lg:grid grid-cols-3 gap-3 w-full mt-4 py-3 px-5">
             {userProjects.map((project, index) => (
               <div
                 key={project.project_id}
-                className="col-span-1 bg-white rounded-lg shadow-md flex flex-col justify-start items-center h-fit hover:shadow-xl transition-all ease-in border overflow-hidden"
+                className="col-span-1 bg-white rounded-lg shadow-md flex flex-col justify-start items-center h-fit hover:shadow-xl transition-all ease-in border overflow-hidden w-full md:w-full"
               >
                 <div
                   className={`w-full flex flex-col justify-center items-center border-b h-full py-5 bg-[${
@@ -67,7 +67,7 @@ const UserProjects = () => {
                 >
                   <FaFilePdf size={65} />
                 </div>
-                <div className="py-1 flex justify-start items-center w-full px-4">
+                <div className="py-1 flex lg:flex-row flex-col justify-start items-start lg:items-center w-full px-4">
                   <div className="flex flex-col justify-start items-start gap-y-2 w-full">
                     <span className="text-sm font-semibold">
                       {project.project_name}
