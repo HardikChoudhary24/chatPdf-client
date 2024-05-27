@@ -73,7 +73,7 @@ const ChatInterface = ({
           <span className="text-sm font-semibold">Loading</span>
         </div>
       ) : (
-        <div className="overflow-hidden h-full">
+        <div className="overflow-hidden h-full w-full">
           <Messages messages={chat} showFetchingResponse={isPending} />
         </div>
       )}
