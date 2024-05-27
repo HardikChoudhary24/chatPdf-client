@@ -1,5 +1,6 @@
+"use client"
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 const Messages = ({
   messages,
@@ -8,12 +9,26 @@ const Messages = ({
   messages: MessageHistoryInterface[] | [];
   showFetchingResponse: boolean;
 }) => {
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
-    <div className="overflow-hidden w-full flex flex-col gap-3 justify-end py-2 pb-4 customScrollbar">
+    <div className="h-full w-full flex flex-col justify-start gap-y-3 overflow-y-scroll customScrollbar py-2 pb-4 px-2">
       {messages.map((message) => (
         <div
           key={message.id}
-          className={cn("flex w-full", { "justify-end": message.role === "User" })}
+          className={cn("flex w-full", {
+            "justify-end": message.role === "User",
+          })}
         >
           <div
             className={cn("px-2 py-1 rounded-lg", {
@@ -40,6 +55,7 @@ const Messages = ({
           </div>
         </div>
       )}
+      <div ref={messagesEndRef} />
     </div>
   );
 };

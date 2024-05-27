@@ -9,13 +9,13 @@ export function cn(...inputs: ClassValue[]) {
 const cookies = new Cookies();
 
 export const userApi = axios.create({
-  baseURL: "http://localhost:4000/api/users",
+  baseURL: "http://localhost:8080/api/users",
   headers: {
     Authorization: `Bearer ${cookies.get("chatpdf_token")}`,
   },
 });
 export const projectApi = axios.create({
-  baseURL: "http://localhost:4000/api/project",
+  baseURL: "http://localhost:8080/api/project",
   headers: {
     Authorization: `Bearer ${cookies.get("chatpdf_token")}`,
   },

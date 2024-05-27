@@ -17,7 +17,7 @@ export default async function middleware(req: NextRequest) {
   }
   if (!isPublicPath && token) {
     try {
-      const response = await axios.get("http://localhost:4000/api/ping", {
+      const response = await axios.get("http://localhost:8080/api/ping", {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.status !== 200) {
@@ -31,7 +31,7 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  return NextResponse.next();
+  // return NextResponse.next();
 }
 export const config = {
   matcher: [

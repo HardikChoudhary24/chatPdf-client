@@ -24,7 +24,6 @@ const ChatInterface = ({
   const [query, setQuery] = useState("");
   const { mutate: queryPdf, data, isPending } = useQueryPdf();
   const router = useRouter();
-  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -57,16 +56,6 @@ const ChatInterface = ({
     }
   }, [data]);
 
-  const scrollToBottom = () => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [chat]);
-
   return (
     <div className="w-full h-full overflow-hidden col-span-2 shadow-lg rounded-lg border bg-white flex flex-col justify-end items-start p-4">
       <div className="w-full py-2 border-b-2 flex justify-start items-center gap-x-2">
@@ -84,10 +73,7 @@ const ChatInterface = ({
           <span className="text-sm font-semibold">Loading</span>
         </div>
       ) : (
-        <div
-          className="w-full h-full overflow-y-scroll customScrollbar px-2 flex justify-end"
-          ref={messagesEndRef}
-        >
+        <div className="overflow-hidden h-full">
           <Messages messages={chat} showFetchingResponse={isPending} />
         </div>
       )}
