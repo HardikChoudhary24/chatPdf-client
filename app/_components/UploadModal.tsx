@@ -83,6 +83,8 @@ const UploadModal = () => {
                     queryKey: ["all-projects"],
                   });
                   toast.success("Project Created", { id: "project-creation" });
+                  setFile(null);
+                  setProjectName("")
                   setOpen(false);
                 },
               }

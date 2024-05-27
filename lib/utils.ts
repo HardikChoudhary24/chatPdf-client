@@ -16,7 +16,4 @@ export const userApi = axios.create({
 });
 export const projectApi = axios.create({
   baseURL: "http://localhost:8080/api/project",
-  headers: {
-    Authorization: `Bearer ${cookies.get("chatpdf_token")}`,
-  },
 });
