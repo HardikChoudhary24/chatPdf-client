@@ -17,9 +17,12 @@ export default async function middleware(req: NextRequest) {
   }
   if (!isPublicPath && token) {
     try {
-      const response = await axios.get("http://localhost:8080/api/ping", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        "http://ec2-13-235-69-122.ap-south-1.compute.amazonaws.com:80/api/ping",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       if (response.status !== 200) {
         return NextResponse.rewrite(new URL("/error", req.nextUrl));
       }
