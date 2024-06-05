@@ -9,12 +9,11 @@ export function cn(...inputs: ClassValue[]) {
 const cookies = new Cookies();
 
 export const userApi = axios.create({
-  baseURL: "http://ec2-13-235-69-122.ap-south-1.compute.amazonaws.com:80/api/users",
+  baseURL: "https://chatpdfapi.hardikchoudhary.in/api/users",
   headers: {
     Authorization: `Bearer ${cookies.get("chatpdf_token")}`,
   },
 });
 export const projectApi = axios.create({
-  baseURL:
-    "http://ec2-13-235-69-122.ap-south-1.compute.amazonaws.com:80/api/project",
+  baseURL: "https://chatpdfapi.hardikchoudhary.in/api/project",
 });
