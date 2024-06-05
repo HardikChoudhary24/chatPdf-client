@@ -10,6 +10,17 @@ export const metadata: Metadata = {
   title: "ChatPDF",
   description:
     "Chat with the Future: Seamlessly Share and Discuss PDFs with AI Assistance!",
+  applicationName: "ChatPDF",
+  metadataBase: new URL(`https://chatPDF.hardikchoudhary.in`),
+  openGraph: {
+    title: "ChatPDF",
+    description:
+      "Chat with the Future: Seamlessly Share and Discuss PDFs with AI Assistance!",
+    url: `https://chatPDF.hardikchoudhary.in`,
+    siteName: "ChatPDF",
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -22,11 +33,7 @@ export default function RootLayout({
       <body
         className={
           inter.className +
-          // "h-full w-full bg-gradient-to-l from-cyan-300 via-amber-200 to-purple-300 "
           "h-full w-full bg-gradient-to-r from-indigo-300 to-purple-400"
-          // "h-full w-full"
-          // "h-full w-full bg-gradient-to-r from-cyan-200 to-cyan-400"
-          // "h-full w-full bg-gradient-to-r from-green-300 to-purple-400"
         }
       >
         <TanstackQueryProvider>
